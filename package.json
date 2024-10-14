@@ -1,0 +1,20 @@
+{
+  "name": "Api-Assessment",
+  "packageManager": "yarn@3.6.4",
+  "scripts": {
+    "dev": "node app.js",
+    "format": "prettier --write \"**/*.{tsx,jsx,js,css,ts}\""
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.0",
+    "mongoose-paginate-v2": "^1.8.5",
+    "prettier": "^3.3.3",
+    "sonyflake": "^1.1.2",
+    "util": "^0.12.5"
+  }
+}
