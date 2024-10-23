@@ -1,6 +1,9 @@
 const {Schema, model} = require('../databases/mongoose');
 
 const AssessmentSchema = new Schema({
+  name: {
+    type: String,
+  },
   image: {
     type: String,
   },
@@ -13,6 +16,9 @@ const AssessmentSchema = new Schema({
   },
   floor: {
     type: Number,
+  },
+  item: {
+    type: String,
   },
   description: {
     type: String,

@@ -26,14 +26,16 @@ const register = async (req, res) => {
     // Save the user to the database
     const savedUser = await newUser.save();
 
+    if (!savedUser) {
+      return res.status(500).json({message: 'Server error'});
+    }
+
     // Create a JWT token
     const token = jwt.sign({userId: savedUser._id}, process.env.JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: '30d',
     });
 
-    return res
-      .status(201)
-      .json({message: 'User registered successfully', token});
+    return res.status(201).json({user: savedUser, token: token});
   } catch (error) {
     return res.status(500).json({message: 'Server error'});
   }
@@ -42,6 +44,7 @@ const register = async (req, res) => {
 // Login function
 const login = async (req, res) => {
   const {email, password} = req.body;
+  // console.log(email,password)
 
   try {
     // Check if user exists
@@ -58,10 +61,10 @@ const login = async (req, res) => {
 
     // Create a JWT token
     const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: '30d',
     });
 
-    return res.status(200).json({message: 'Login successful', token});
+    return res.status(200).json({user: user, token: token});
   } catch (error) {
     return res.status(500).json({message: 'Server error'});
   }

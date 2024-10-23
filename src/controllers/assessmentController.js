@@ -1,14 +1,17 @@
 const Assessment = require('../models/Assessment');
 const createAssessment = async (req, res) => {
-  const {image, idBuilding, floor, description, level} = req.body;
+  const {name, idUser, image, idBuilding, floor, item, description, level} =
+    req.body;
 
   try {
     // Creating a new Assessment, linking it with the authenticated user (req.user)
     const newAssessment = new Assessment({
+      name,
       image,
       idBuilding,
-      idUser: req.user._id, // The authenticated user's ID from token
+      idUser, // The authenticated user's ID from token
       floor,
+      item,
       description,
       level,
     });

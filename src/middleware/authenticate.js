@@ -23,7 +23,7 @@ const authenticate = async (req, res, next) => {
     req.user = user; // Attach user data to the request object
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
-    return res.status(400).json({message: 'Invalid token'});
+    return res.status(400).json({message: 'Invalid token error'});
   }
 };
 
