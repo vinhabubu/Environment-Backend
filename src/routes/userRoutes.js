@@ -9,9 +9,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    return res.json(users);
   } catch (error) {
-    res.status(500).json({message: 'Server error: ' + error.message});
+    return res.status(500).json({message: 'Server error: ' + error.message});
   }
 });
 
@@ -22,9 +22,9 @@ router.get('/:id', async (req, res) => {
     if (!user) {
       return res.status(404).json({message: 'User not found'});
     }
-    res.json(user);
+    return res.json(user);
   } catch (error) {
-    res.status(500).json({message: 'Server error: ' + error.message});
+    return res.status(500).json({message: 'Server error: ' + error.message});
   }
 });
 
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
   const {id} = req.params;
-  const {username, password, email} = req.body;
+  const {username, password, email , isBlock} = req.body;
 
   // console.log(username, password , email)
 
@@ -61,6 +61,8 @@ router.put('/update/:id', async (req, res) => {
     // Update user fields if provided
     if (username) user.username = username;
     if (email) user.email = email;
+    if (isBlock) user.isBlock = isBlock;
+
 
     // If the password is provided, hash it before updating
     if (password) {

@@ -10,6 +10,7 @@ const BuildingSchema = new Schema({
   },
   idQr: {
     type: String,
+    unique: true,
   },
   createdAt: {
     type: Date,
