@@ -63,9 +63,9 @@ const updateBuilding = async (req, res) => {
     if (idQr) building.idQr = idQr;
 
     if (name) {
-       await Assessment.updateMany(
-        { idBuilding : id }, // Matching condition
-        { $set: { name: name, updatedAt: Date.now() } } // Updating name and updatedAt
+      await Assessment.updateMany(
+        {idBuilding: id}, // Matching condition
+        {$set: {name: name, updatedAt: Date.now()}}, // Updating name and updatedAt
       );
     }
     await building.save();

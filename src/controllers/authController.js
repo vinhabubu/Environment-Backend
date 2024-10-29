@@ -53,6 +53,10 @@ const login = async (req, res) => {
       return res.status(400).json({message: 'Invalid credentials'});
     }
 
+    if (user?.isBlock) {
+      return res.status(400).json({message: 'Account is blocked'});
+    }
+
     // Compare the password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {

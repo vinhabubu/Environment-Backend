@@ -46,38 +46,39 @@ router.post('/', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
   const {id} = req.params;
-  const {username, password, email , isBlock} = req.body;
-
-  // console.log(username, password , email)
+  const {username, password, email, isBlock} = req.body;
 
   try {
-    // Find the user by id
-    const user = await User.findById(id);
+    // Prepare the fields to update
+    const updateFields = {};
+    if (username) updateFields.username = username;
+    if (email) updateFields.email = email;
+    if (typeof isBlock === 'boolean') updateFields.isBlock = isBlock;
 
-    if (!user) {
-      return res.status(404).json({message: 'User not found'});
-    }
-
-    // Update user fields if provided
-    if (username) user.username = username;
-    if (email) user.email = email;
-    if (isBlock) user.isBlock = isBlock;
-
-
-    // If the password is provided, hash it before updating
+    // If password is provided, hash it before updating
     if (password) {
       const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      user.password = hashedPassword;
+      updateFields.password = await bcrypt.hash(password, saltRounds);
     }
 
     // Update the updatedAt field
-    user.updatedAt = Date.now();
+    updateFields.updatedAt = Date.now();
 
-    // Save the updated user
-    await user.save();
+    // Use findByIdAndUpdate to directly update in MongoDB
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {$set: updateFields},
+      {new: true}, // returns the updated document
+    );
 
-    return res.status(200).json({message: 'User updated successfully', user});
+    console.log(updatedUser, 'updatedUser');
+    if (!updatedUser) {
+      return res.status(404).json({message: 'User not found'});
+    }
+
+    return res
+      .status(200)
+      .json({message: 'User updated successfully', user: updatedUser});
   } catch (error) {
     console.error('Error updating user:', error);
     return res.status(500).json({message: 'Server error', error});

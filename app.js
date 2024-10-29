@@ -27,7 +27,7 @@ app.use('/api/buildings', buildingRoutes);
 app.use('/api/assessment', assessmentRoutes);
 
 // Define IP and Port
-const HOST = 'localhost'; // Your desired IP address
+const HOST = process.env.HOST || '192.199.20.102'; // Your desired IP address
 const PORT = process.env.PORT || 5000;
 
 // Start the server on the specific IP and port
