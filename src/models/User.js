@@ -3,8 +3,6 @@ const {Schema, model} = require('../databases/mongoose');
 const UserSchema = new Schema({
   username: {
     type: String,
-    required: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -13,14 +11,17 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+  },
+  address: {
+    type: String,
   },
   roleId: {
     type: Number,
     default: 0,
-  },
-  isBlock: {
-    type: Boolean,
-    default: false,
   },
   createdAt: {
     type: Date,
